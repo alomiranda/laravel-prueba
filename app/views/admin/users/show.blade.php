@@ -14,8 +14,6 @@
 
   </div>
 
-  
-
 
   <p>
     <a href="{{ route('admin.users.index') }}" class="btn btn-primary">Todos</a>

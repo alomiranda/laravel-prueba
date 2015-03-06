@@ -8,7 +8,7 @@
   
 
 
-  <table class="table table-striped">
+  <table class="table table-striped" style="width: 900px">
   	{{ $users->links() }}
     <tr>
         <th>Full name</th>
@@ -20,12 +20,12 @@
         <td>{{ $user->full_name }}</td>
         <td>{{ $user->email }}</td>
         <td>
-        	<a href="users/{{$user->id}}" >
-        		<button type="button" class="btn btn-default" aria-label="Left Align">
-  					<span class="glyphicon glyphicon-sunglasses" aria-hidden="true"></span>
-				</button>
-			</a>
-        </td>
+        	<a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-info">
+              Ver
+          </a>
+          <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
+            Editar
+          </a>
     </tr>
     @endforeach
   </table>

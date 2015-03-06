@@ -66,6 +66,9 @@ class UsersController extends \BaseController {
 	{
 		$user = User::find($id);
 
+		if (is_null ($user)){
+			App::abort(404);
+		}
 //		return $id;
 
 		return View::make('admin.users.show')->with('user', $user);
@@ -80,7 +83,13 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$user = User::find($id);
+		if (is_null ($user))
+		{
+			App::abort(404);
+		}
+
+		return View::make('admin/users/form')->with('user', $user);
 	}
 
 
@@ -92,7 +101,31 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		
+		// Creamos un nuevo objeto para nuestro nuevo usuario
+        $user = User::find($id);
+        
+        // Si el usuario no existe entonces lanzamos un error 404 :(
+        if (is_null ($user))
+        {
+            App::abort(404);
+        }
+        
+        // Obtenemos la data enviada por el usuario
+        $data = Input::all();
+        
+        // Revisamos si la data es válido
+        // Revisamos si la data es válida y guardamos en ese caso
+        if ($user->validAndSave($data))
+        {
+            // Y Devolvemos una redirección a la acción show para mostrar el usuario
+            return Redirect::route('admin.users.show', array($user->id));
+        }
+        else
+        {
+            // En caso de error regresa a la acción create con los datos y los errores encontrados
+            return Redirect::route('admin.users.edit', $user->id)->withInput()->withErrors($user->errors);
+        }
 	}
 
 
