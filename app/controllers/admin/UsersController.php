@@ -137,7 +137,27 @@ class UsersController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$user = User::find($id);
+        
+        if (is_null ($user))
+        {
+            App::abort(404);
+        }
+        
+        $user->delete();
+
+        if (Request::ajax())
+        {
+            return Response::json(array (
+                'success' => true,
+                'msg'     => 'Usuario ' . $user->full_name . ' eliminado',
+                'id'      => $user->id
+            ));
+        }
+        else
+        {
+            return Redirect::route('admin.users.index');
+        }
 	}
 
 

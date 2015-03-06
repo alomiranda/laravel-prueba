@@ -26,6 +26,9 @@
           <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
             Editar
           </a>
+          <a href="#" data-id="{{ $user->id }}" class="btn btn-danger btn-delete">
+              Eliminar
+          </a>
     </tr>
     @endforeach
   </table>
@@ -35,4 +38,6 @@
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Crear un nuevo usuario</a>
   </p>
 
+{{ Form::open(array('route' => array('admin.users.destroy', 'USER_ID'), 'method' => 'DELETE', 'role' => 'form', 'id' => 'form-delete')) }}
+{{ Form::close() }}
 @stop
